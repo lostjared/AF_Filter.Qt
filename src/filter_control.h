@@ -5,13 +5,13 @@
 #include<QtGui>
 #include<QtCore>
 
-class FilterControl;
+class FilterWindow;
 
 class FilterControls : QDialog {
 public:
     FilterControls(QWidget *parent = 0);
 private:
-    friend class FilterControl;
+    friend class FilterWindow;
 };
 
 #endif
