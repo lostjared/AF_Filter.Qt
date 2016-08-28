@@ -4,7 +4,7 @@
 #include<QtGui>
 #include<QtCore>
 #include<iostream>
-
+#include "filter_control.h"
 
 class FilterWindow : public QMainWindow {
     
@@ -36,6 +36,7 @@ private:
     
     QImage current_image;
     bool image_set;
+    FilterControl *filter_control;
 };
 
 

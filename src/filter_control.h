@@ -7,9 +7,9 @@
 
 class FilterWindow;
 
-class FilterControls : QDialog {
+class FilterControl : QDialog {
 public:
-    FilterControls(QWidget *parent = 0);
+    FilterControl(QWidget *parent = 0);
 private:
     friend class FilterWindow;
 };

@@ -1,4 +1,5 @@
 #include "main_window.h"
+#include "filter_control.h"
 
 
 FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
@@ -6,6 +7,12 @@ FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     setWindowTitle("AF_Filter ");
     image_set = false;
     createMenu();
+    filter_control = new FilterControl(this);
+    filter_control->setGeometry(100, 730, 800, 100);
+    filter_control->setWindowTitle("Controls");
+    Qt::WindowFlags flags = filter_control->windowFlags();
+    filter_control->setWindowFlags(flags | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    filter_control->show();
 }
 
 void FilterWindow::createMenu() {
