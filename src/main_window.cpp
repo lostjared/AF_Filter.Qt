@@ -8,10 +8,10 @@ FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     image_set = false;
     createMenu();
     filter_control = new FilterControl(this);
-    filter_control->setGeometry(100, 730, 800, 100);
+    filter_control->setGeometry(100, 710, 800, 100);
     filter_control->setWindowTitle("Controls");
     Qt::WindowFlags flags = filter_control->windowFlags();
-    filter_control->setWindowFlags(flags | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    filter_control->setWindowFlags(flags | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
     filter_control->show();
 }
 
