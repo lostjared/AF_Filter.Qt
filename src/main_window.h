@@ -12,6 +12,8 @@ class FilterWindow : public QMainWindow {
     
 public:
     FilterWindow(QWidget *parent = 0);
+    void paintEvent(QPaintEvent *event);
+    void updateScreen();
     
 public slots:
     void fileLoad();
@@ -32,6 +34,8 @@ private:
     QAction *edit_copy, *edit_paste;
     QAction *help_howto, *help_about;
     
+    QImage current_image;
+    bool image_set;
 };
 
 

@@ -4,6 +4,7 @@
 FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     setGeometry(100, 100, 800, 600);
     setWindowTitle("AF_Filter ");
+    image_set = false;
     createMenu();
 }
 
@@ -56,8 +57,34 @@ void FilterWindow::createMenu() {
     connect(help_about, SIGNAL(triggered()), this, SLOT(helpAbout()));
  }
 
+void FilterWindow::paintEvent(QPaintEvent *) {
+    QImage temp_image(size(), QImage::Format_ARGB32_Premultiplied);
+    QPainter paint(&temp_image);
+    paint.fillRect(QRect(QPoint(0,0), size()), QColor(0,0,0));
+    if(image_set == true) {
+        QRect src(0,0, 800, 600);
+        QImage scaled_image = current_image.scaled(800, 600, Qt::KeepAspectRatio);
+        QRect dst(QPoint(0,0),scaled_image.size());
+        dst.moveCenter(src.center());
+        paint.drawImage(dst.topLeft(), scaled_image);
+    }
+    QPainter flip_paint(this);
+    flip_paint.drawImage(0, 0, temp_image);
+}
+
+void FilterWindow::updateScreen() {
+    repaint();
+}
 
 void FilterWindow::fileLoad() {
+    
+    QString input_file = QFileDialog::getOpenFileName(this, "Select an Image", "", "Images (*.png *.xpm *.jpg)");
+    
+    if(input_file != "") {
+        current_image = QImage(input_file);
+    	image_set = true;
+    	updateScreen();
+    }
     
 }
 void FilterWindow::fileSave() {
