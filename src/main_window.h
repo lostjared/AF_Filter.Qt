@@ -18,11 +18,19 @@ public slots:
     void fileSave();
     void fileExit();
     
+    void editCopy();
+    void editPaste();
+    
+    void helpHowTo();
+    void helpAbout();
+    
 private:
     void createMenu();
     
     QMenu *file_menu, *edit_menu, *help_menu;
     QAction *file_load, *file_save, *file_exit;
+    QAction *edit_copy, *edit_paste;
+    QAction *help_howto, *help_about;
     
 };
 
