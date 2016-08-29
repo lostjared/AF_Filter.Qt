@@ -1,5 +1,4 @@
 #include "main_window.h"
-#include "filter_control.h"
 
 
 FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
