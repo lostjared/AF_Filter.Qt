@@ -105,15 +105,8 @@ void FilterWindow::fileLoad() {
     
 }
 void FilterWindow::fileSave() {
-    
-    /* QImage image;
-     QByteArray ba;
-     QBuffer buffer(&ba);
-     buffer.open(QIODevice::WriteOnly);
-     image.save(&buffer, "PNG"); // writes image into ba in PNG format */
-    
-    
-}
+    QString file_name = QFileDialog::getSaveFileName(this, "Save as PNG", "", "Image (*.png)");
+    if(file_name != "") current_image.save(file_name, "PNG"); }
 
 void FilterWindow::fileSet() {
 
@@ -191,7 +184,7 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
 }
 
 void FilterControl::updateIndex(int) {
-        parent_window->filterChange(filter_combo->currentIndex(), slider->tickPosition());
+    parent_window->filterChange(filter_combo->currentIndex(), slider->tickPosition());
 }
 
 void FilterControl::setPos(int pos) {
