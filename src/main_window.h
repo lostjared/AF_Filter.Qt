@@ -14,6 +14,7 @@ class FilterControl : QDialog {
 public:
     FilterControl(QWidget *parent = 0);
 public slots:
+    void updateIndex(int pos);
     void setPos(int pos);
     
 private:
@@ -39,6 +40,7 @@ public:
 public slots:
     void fileLoad();
     void fileSave();
+    void fileSet();
     void fileExit();
     
     void editCopy();
@@ -51,7 +53,7 @@ private:
     void createMenu();
     
     QMenu *file_menu, *edit_menu, *help_menu;
-    QAction *file_load, *file_save, *file_exit;
+    QAction *file_load, *file_save, *file_exit, *file_setsource;
     QAction *edit_copy, *edit_paste;
     QAction *help_howto, *help_about;
     

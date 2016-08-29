@@ -29,6 +29,12 @@ void FilterWindow::createMenu() {
     file_menu->addAction(file_save);
     connect(file_save, SIGNAL(triggered()), this, SLOT(fileSave()));
     
+    file_setsource = new QAction(tr("Set Current as Source"), this);
+    file_setsource->setShortcut(tr("Ctrl+E"));
+    file_setsource->setStatusTip(tr("Set Current as Source"));
+    file_menu->addAction(file_setsource);
+    connect(file_setsource, SIGNAL(triggered()), this, SLOT(fileSet()));
+    
     file_exit = new QAction(tr("E&xit"), this);
     file_menu->addAction(file_exit);
     connect(file_exit, SIGNAL(triggered()), this, SLOT(fileExit()));
@@ -109,6 +115,14 @@ void FilterWindow::fileSave() {
     
 }
 
+void FilterWindow::fileSet() {
+
+    if(image_set) {
+        original_image = current_image;
+    }
+}
+
+
 void FilterWindow::fileExit() {
     std::cout << "Exiting Application...\n";
     QApplication::quit();
@@ -166,13 +180,18 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
     slider->setMinimum(1);
     slider->setMaximum(512);
     slider->setSingleStep(1);
-    
-    slider_index = new QLabel("0", this);
+    slider->setSliderPosition(1);
+    slider_index = new QLabel("1", this);
     slider_index->setGeometry(770,15,30,25);
     
     parent_window = (FilterWindow*)parent;
     
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(setPos(int)));
+    connect(filter_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIndex(int)));
+}
+
+void FilterControl::updateIndex(int) {
+        parent_window->filterChange(filter_combo->currentIndex(), slider->tickPosition());
 }
 
 void FilterControl::setPos(int pos) {
