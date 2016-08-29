@@ -4,7 +4,27 @@
 #include<QtGui>
 #include<QtCore>
 #include<iostream>
-#include "filter_control.h"
+
+class FilterWindow;
+
+class FilterControl : QDialog {
+    
+    Q_OBJECT
+public:
+    FilterControl(QWidget *parent = 0);
+    
+    public slots:
+    void setPos(int pos);
+    
+private:
+    friend class FilterWindow;
+    QLabel *filter_label, *slider_index;
+    QComboBox *filter_combo;
+    QSlider *slider;
+    FilterWindow *parent_window;
+};
+
+extern const char *filter_names[];
 
 class FilterWindow : public QMainWindow {
     
@@ -41,7 +61,6 @@ private:
     bool image_set;
     FilterControl *filter_control;
 };
-
 
 
 
