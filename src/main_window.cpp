@@ -122,11 +122,21 @@ void FilterWindow::fileExit() {
 }
 
 void FilterWindow::editCopy() {
-    
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setImage(current_image);
 }
 
 void FilterWindow::editPaste() {
     
+    QClipboard *clipboard = QApplication::clipboard();
+    const QMimeData *mimedata = clipboard->mimeData();
+    
+    if(mimedata->hasImage()) {
+        original_image = qvariant_cast<QImage>(mimedata->imageData());
+        current_image = original_image;
+        image_set = true;
+        updateScreen();
+    }
 }
 
 void FilterWindow::helpHowTo() {
