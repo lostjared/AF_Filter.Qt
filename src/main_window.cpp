@@ -11,7 +11,7 @@ FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     filter_control->setGeometry(100, 710, 800, 100);
     filter_control->setWindowTitle("Controls");
     Qt::WindowFlags flags = filter_control->windowFlags();
-    filter_control->setWindowFlags(flags | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+    filter_control->setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::CustomizeWindowHint |  Qt::WindowStaysOnTopHint | Qt::Tool);
     filter_control->show();
 }
 
@@ -69,14 +69,18 @@ void FilterWindow::paintEvent(QPaintEvent *) {
     QPainter paint(&temp_image);
     paint.fillRect(QRect(QPoint(0,0), size()), QColor(0,0,0));
     if(image_set == true) {
-        QRect src(0,0, 800, 600);
-        QImage scaled_image = current_image.scaled(800, 600, Qt::KeepAspectRatio);
+        QRect src(QPoint(0, 0), size());
+        QImage scaled_image = current_image.scaled(size(), Qt::KeepAspectRatio);
         QRect dst(QPoint(0,0),scaled_image.size());
         dst.moveCenter(src.center());
         paint.drawImage(dst.topLeft(), scaled_image);
     }
     QPainter flip_paint(this);
     flip_paint.drawImage(0, 0, temp_image);
+}
+
+void FilterWindow::resizeEvent(QResizeEvent *) {
+    
 }
 
 void FilterWindow::updateScreen() {

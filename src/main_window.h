@@ -14,6 +14,7 @@ public:
     FilterWindow(QWidget *parent = 0);
     void paintEvent(QPaintEvent *event);
     void updateScreen();
+    void resizeEvent(QResizeEvent *event);
     
 public slots:
     void fileLoad();
