@@ -10,7 +10,7 @@ FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     filter_control = new FilterControl(this);
     filter_control->setGeometry(100, 710, 800, 100);
     filter_control->setWindowTitle("Controls");
-    Qt::WindowFlags flags = filter_control->windowFlags();
+    //Qt::WindowFlags flags = filter_control->windowFlags();
     filter_control->setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::CustomizeWindowHint |  Qt::WindowStaysOnTopHint | Qt::Tool);
     filter_control->show();
 }
@@ -99,7 +99,6 @@ void FilterWindow::fileLoad() {
     
 }
 void FilterWindow::fileSave() {
-    
 }
 
 void FilterWindow::fileExit() {
@@ -123,4 +122,8 @@ void FilterWindow::helpAbout() {
     QMessageBox::information(this, "About AF_Filter.Qt", "<b>AF_Filter written by Jared Bruni</b>\nhttp://lostsidedead.com");
 }
 
+void FilterWindow::filterChange(int index) {
 
+    // preform filter action
+
+}

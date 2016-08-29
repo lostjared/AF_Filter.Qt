@@ -27,6 +27,8 @@ public slots:
     void helpHowTo();
     void helpAbout();
     
+    void filterChange(int filter);
+    
 private:
     void createMenu();
     
