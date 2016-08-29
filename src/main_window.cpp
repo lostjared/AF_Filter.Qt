@@ -92,12 +92,21 @@ void FilterWindow::fileLoad() {
     
     if(input_file != "") {
         current_image = QImage(input_file);
+        original_image = current_image;
     	image_set = true;
     	updateScreen();
     }
     
 }
 void FilterWindow::fileSave() {
+    
+    /* QImage image;
+     QByteArray ba;
+     QBuffer buffer(&ba);
+     buffer.open(QIODevice::WriteOnly);
+     image.save(&buffer, "PNG"); // writes image into ba in PNG format */
+    
+    
 }
 
 void FilterWindow::fileExit() {
@@ -121,10 +130,11 @@ void FilterWindow::helpAbout() {
     QMessageBox::information(this, "About AF_Filter.Qt", "<b>AF_Filter written by Jared Bruni</b>\nhttp://lostsidedead.com");
 }
 
-void FilterWindow::filterChange(int index) {
-
+void FilterWindow::filterChange(int filter, int index) {
     // preform filter action
-
+    current_image = original_image;
+    alphaFlame(current_image, filter, index);
+    updateScreen();
 }
 
 // dialog FilterControl
@@ -170,5 +180,5 @@ void FilterControl::setPos(int pos) {
     QTextStream stream(&text);
     stream << pos;
     slider_index->setText(text);
-    parent_window->filterChange(pos);
+    parent_window->filterChange(filter_combo->currentIndex(), pos);
 }

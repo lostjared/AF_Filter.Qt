@@ -4,16 +4,16 @@
 #include<QtGui>
 #include<QtCore>
 #include<iostream>
+#include "alphaflame.h"
+
 
 class FilterWindow;
 
 class FilterControl : QDialog {
-    
     Q_OBJECT
 public:
     FilterControl(QWidget *parent = 0);
-    
-    public slots:
+public slots:
     void setPos(int pos);
     
 private:
@@ -35,7 +35,7 @@ public:
     void paintEvent(QPaintEvent *event);
     void updateScreen();
     void resizeEvent(QResizeEvent *event);
-    
+    void filterChange(int filter, int iteration);
 public slots:
     void fileLoad();
     void fileSave();
@@ -47,8 +47,6 @@ public slots:
     void helpHowTo();
     void helpAbout();
     
-    void filterChange(int filter);
-    
 private:
     void createMenu();
     
@@ -57,7 +55,7 @@ private:
     QAction *edit_copy, *edit_paste;
     QAction *help_howto, *help_about;
     
-    QImage current_image;
+    QImage original_image, current_image;
     bool image_set;
     FilterControl *filter_control;
 };
