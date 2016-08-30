@@ -41,6 +41,20 @@ void FilterWindow::createMenu() {
     
     edit_menu = menuBar()->addMenu(tr("&Edit"));
     
+    edit_undo = new QAction(tr("&Undo"), this);
+    edit_undo->setShortcut(tr("Ctrl+Z"));
+    edit_undo->setStatusTip(tr("Undo operation"));
+    edit_menu->addAction(edit_undo);
+    connect(edit_undo, SIGNAL(triggered()), this, SLOT(editUndo()));
+    
+    edit_redo = new QAction(tr("&Redo"), this);
+    edit_redo->setShortcut(tr("Ctrl+R"));
+    edit_redo->setStatusTip(tr("Redo operation"));
+    edit_menu->addAction(edit_redo);
+    connect(edit_redo, SIGNAL(triggered()), this, SLOT(editRedo()));
+    
+    edit_menu->addSeparator();
+    
     edit_copy = new QAction(tr("&Copy"), this);
     edit_copy->setShortcut(tr("Ctrl+C"));
     edit_copy->setStatusTip(tr("Copy Image"));
@@ -99,6 +113,7 @@ void FilterWindow::fileLoad() {
     if(input_file != "") {
         current_image = QImage(input_file);
         original_image = current_image;
+        image_list.push_back(original_image);
     	image_set = true;
     	updateScreen();
     }
@@ -109,16 +124,37 @@ void FilterWindow::fileSave() {
     if(file_name != "") current_image.save(file_name, "PNG"); }
 
 void FilterWindow::fileSet() {
-
     if(image_set) {
+        image_list.push_back(original_image);
         original_image = current_image;
     }
 }
 
-
 void FilterWindow::fileExit() {
     std::cout << "Exiting Application...\n";
     QApplication::quit();
+}
+
+void FilterWindow::editUndo() {
+     if(image_list.size() > 0) {
+    	QImage image = image_list.back();
+    	image_list.pop_back();
+        redo_list.push_back(current_image);
+        original_image = image;
+        current_image = image;
+    	updateScreen();
+    }
+}
+
+void FilterWindow::editRedo() {
+    if(redo_list.size() > 0) {
+        QImage image = redo_list.back();
+        redo_list.pop_back();
+        image_list.push_back(current_image);
+        current_image = image;
+        original_image = image;
+        updateScreen();
+    }
 }
 
 void FilterWindow::editCopy() {

@@ -4,6 +4,7 @@
 #include<QtGui>
 #include<QtCore>
 #include<iostream>
+#include<vector>
 #include "alphaflame.h"
 
 
@@ -47,6 +48,8 @@ public slots:
     void fileSet();
     void fileExit();
     
+    void editUndo();
+    void editRedo();
     void editCopy();
     void editPaste();
     
@@ -59,12 +62,14 @@ private:
     
     QMenu *file_menu, *edit_menu, *help_menu;
     QAction *file_load, *file_save, *file_exit, *file_setsource;
-    QAction *edit_copy, *edit_paste;
+    QAction *edit_undo, *edit_redo, *edit_copy, *edit_paste;
     QAction *help_howto, *help_about;
     
     QImage original_image, current_image;
     bool image_set;
     FilterControl *filter_control;
+    std::vector<QImage> image_list;
+    std::vector<QImage> redo_list;
 };
 
 
