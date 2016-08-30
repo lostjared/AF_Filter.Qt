@@ -237,7 +237,7 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
     connect(neg_box, SIGNAL(stateChanged(int)), this, SLOT(checkChanged(int)));
     
     rgb_combo = new QComboBox(this);
-    rgb_combo->setGeometry(565, 45, 100, 20);
+    rgb_combo->setGeometry(565, 45, 100, 25);
     rgb_combo->addItem("RGB");
     rgb_combo->addItem("BGR");
     rgb_combo->addItem("BRG");
