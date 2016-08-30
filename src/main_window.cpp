@@ -243,7 +243,7 @@ void FilterControl::updateIndex(int) {
     parent_window->filterChange((neg_box->isChecked()) ? true : false, slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), filter_combo->currentIndex(), slider->sliderPosition());
 }
 
-void FilterControl::checkChanged(int chk) {
+void FilterControl::checkChanged(int) {
     updateIndex(0);
 }
 
