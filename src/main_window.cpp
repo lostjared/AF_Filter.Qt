@@ -194,7 +194,7 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
 }
 
 void FilterControl::updateIndex(int) {
-    parent_window->filterChange(filter_combo->currentIndex(), slider->tickPosition());
+    parent_window->filterChange(filter_combo->currentIndex(), slider->sliderPosition());
 }
 
 void FilterControl::setPos(int pos) {
