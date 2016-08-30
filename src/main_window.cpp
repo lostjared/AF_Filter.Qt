@@ -235,8 +235,6 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
     neg_box->setGeometry(510, 45, 100, 20);
     
     connect(neg_box, SIGNAL(stateChanged(int)), this, SLOT(checkChanged(int)));
-    
-    
 }
 
 void FilterControl::updateIndex(int) {

@@ -11,7 +11,6 @@ unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value) {
 }
 
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int filter_num, int iteration) {
-    //std::cout << "Applying Filter #: " << filter_num << "\n";
     
     static double count = 1.0;
     int rev = 0;
@@ -28,6 +27,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             image.setPixel(i, z, val);
             }
     }
+    
+    std::cout << "Applied Filter #: " << filter_num << "\n";
+
 }
 
 
@@ -167,8 +169,9 @@ void changePixel(unsigned int current_filterx, int width, int height, QImage &fu
             total_r /= 3;
             total_r *= alpha;
             int iq = i+1;
-            if(iq > width) return;
+            if(iq > width-1) return;
             int zq = z;
+            if(zq > height-1) return;
             unsigned int value = 0;
             unsigned char *temp = pixelAt(full_buffer, iq, zq, value);
             //cv::Vec3b &temp = full_buffer.at<cv::Vec3b>(zq, iq);
