@@ -10,12 +10,11 @@ unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value) {
     return ptr;
 }
 
-void alphaFlame(QImage &image, unsigned int red, unsigned int green, unsigned int blue, int filter_num, int iteration) {
+void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int filter_num, int iteration) {
     //std::cout << "Applying Filter #: " << filter_num << "\n";
     
     static double count = 1.0;
     int rev = 0;
-    bool neg = false;
     unsigned int randomNumber = 1;
     
     for(int i = 0; i < image.width(); ++i) {
