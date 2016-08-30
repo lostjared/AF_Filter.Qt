@@ -7,7 +7,7 @@ FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     image_set = false;
     createMenu();
     filter_control = new FilterControl(this);
-    filter_control->setGeometry(100, 710, 800, 100);
+    filter_control->setGeometry(100, 710, 800, 80);
     filter_control->setWindowTitle("Controls");
     //Qt::WindowFlags flags = filter_control->windowFlags();
     filter_control->setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::CustomizeWindowHint |  Qt::WindowStaysOnTopHint | Qt::Tool);
@@ -244,6 +244,14 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
     rgb_combo->addItem("GRB");
     
     connect(rgb_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIndex(int)));
+    
+    setAsSource = new QPushButton("Set Current", this);
+    setAsSource->setGeometry(675, 45, 100, 20);
+    connect(setAsSource, SIGNAL(clicked()), this, SLOT(setSource()));
+}
+
+void FilterControl::setSource() {
+    parent_window->fileSet();
 }
 
 void FilterControl::updateIndex(int) {

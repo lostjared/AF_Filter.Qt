@@ -14,6 +14,7 @@ class FilterControl : QDialog {
 public:
     FilterControl(QWidget *parent = 0);
 public slots:
+    void setSource();
     void updateIndex(int pos);
     void setPos(int pos);
     void setSliderText(int pos);
@@ -25,6 +26,7 @@ private:
     QSlider *slider, *slider_red, *slider_green, *slider_blue;
     QCheckBox *neg_box;
     FilterWindow *parent_window;
+    QPushButton *setAsSource;
 };
 
 extern const char *filter_names[];
