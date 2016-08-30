@@ -10,10 +10,9 @@ unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value) {
     return ptr;
 }
 
-void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int filter_num, int iteration) {
+void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     static double count = 1.0;
-    int rev = 0;
     unsigned int randomNumber = 1;
     
     for(int i = 0; i < image.width(); ++i) {
@@ -433,15 +432,10 @@ void changePixel(unsigned int current_filterx, int width, int height, QImage &fu
             break;
         case 32:
         {
-            unsigned int value = 0;
-            value  = ~buffer[0] + ~buffer[1] + ~buffer[2];
-            value /= 2;
-            buffer[0] = buffer[0]+value*pos;
-            value /= 2;
-            buffer[1] = buffer[1]+value*pos;
-            value /= 2;
-            buffer[2] = buffer[2]+value*pos;
-            
+            unsigned char value = 0;
+            value  = (~buffer[0] + ~buffer[1] + ~buffer[2]);
+            buffer[0] += (value*pos)/4;
+            buffer[1] += value*pos;
         }
             break;
         case 33:

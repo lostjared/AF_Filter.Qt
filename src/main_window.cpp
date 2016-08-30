@@ -147,10 +147,10 @@ void FilterWindow::helpAbout() {
     QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter written by Jared Bruni</b>\nhttp://lostsidedead.com");
 }
 
-void FilterWindow::filterChange(bool neg_state, unsigned int red, unsigned int green, unsigned int blue, int filter, int index) {
+void FilterWindow::filterChange(bool neg_state, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter, int index) {
     // preform filter action
     current_image = original_image;
-    alphaFlame(current_image,neg_state, red,green,blue,filter, index);
+    alphaFlame(current_image,neg_state, red,green,blue,rev,filter, index);
     updateScreen();
 }
 
@@ -232,13 +232,22 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
     connect(slider_blue, SIGNAL(valueChanged(int)), this, SLOT(setSliderText(int)));
     
     neg_box = new QCheckBox("Negate", this);
-    neg_box->setGeometry(510, 45, 100, 20);
+    neg_box->setGeometry(495, 45, 100, 20);
     
     connect(neg_box, SIGNAL(stateChanged(int)), this, SLOT(checkChanged(int)));
+    
+    rgb_combo = new QComboBox(this);
+    rgb_combo->setGeometry(565, 45, 100, 20);
+    rgb_combo->addItem("RGB");
+    rgb_combo->addItem("BGR");
+    rgb_combo->addItem("BRG");
+    rgb_combo->addItem("GRB");
+    
+    connect(rgb_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIndex(int)));
 }
 
 void FilterControl::updateIndex(int) {
-    parent_window->filterChange((neg_box->isChecked()) ? true : false, slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), filter_combo->currentIndex(), slider->sliderPosition());
+    parent_window->filterChange((neg_box->isChecked()) ? true : false, slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), rgb_combo->currentIndex(), filter_combo->currentIndex(), slider->sliderPosition());
 }
 
 void FilterControl::checkChanged(int) {
@@ -250,7 +259,7 @@ void FilterControl::setPos(int pos) {
     QTextStream stream(&text);
     stream << "<b>" << pos << "</b>";
     slider_index->setText(text);
-    parent_window->filterChange((neg_box->isChecked()) ? true : false, slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), filter_combo->currentIndex(), pos);
+    parent_window->filterChange((neg_box->isChecked()) ? true : false, slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), rgb_combo->currentIndex(), filter_combo->currentIndex(), pos);
 }
 
 void FilterControl::setSliderText(int) {
@@ -266,7 +275,7 @@ void FilterControl::setSliderText(int) {
     QTextStream blue_stream(&blue_text);
     blue_stream << "<b>" << slider_blue->sliderPosition() << "</b>";
     blue_index->setText(blue_text);
-    parent_window->filterChange((neg_box->isChecked()) ? true : false, slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), filter_combo->currentIndex(), slider->sliderPosition());
+    parent_window->filterChange((neg_box->isChecked()) ? true : false, slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), rgb_combo->currentIndex(), filter_combo->currentIndex(), slider->sliderPosition());
 }
 
 
