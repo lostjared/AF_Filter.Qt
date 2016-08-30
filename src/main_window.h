@@ -16,12 +16,14 @@ public:
 public slots:
     void updateIndex(int pos);
     void setPos(int pos);
+    void setSliderText(int pos);
     
 private:
     friend class FilterWindow;
-    QLabel *filter_label, *slider_index;
+    QLabel *filter_label, *slider_index, *red_label, *green_label, *blue_label, *red_index, *green_index, *blue_index;
     QComboBox *filter_combo;
-    QSlider *slider;
+    QSlider *slider, *slider_red, *slider_green, *slider_blue;
+    
     FilterWindow *parent_window;
 };
 
@@ -36,7 +38,7 @@ public:
     void paintEvent(QPaintEvent *event);
     void updateScreen();
     void resizeEvent(QResizeEvent *event);
-    void filterChange(int filter, int iteration);
+    void filterChange(unsigned int red, unsigned int green, unsigned int blue, int filter, int iteration);
 public slots:
     void fileLoad();
     void fileSave();
@@ -48,6 +50,7 @@ public slots:
     
     void helpHowTo();
     void helpAbout();
+    
     
 private:
     void createMenu();

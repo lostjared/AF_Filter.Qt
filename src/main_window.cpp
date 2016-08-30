@@ -144,13 +144,13 @@ void FilterWindow::helpHowTo() {
 }
 
 void FilterWindow::helpAbout() {
-    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AF_Filter written by Jared Bruni</b>\nhttp://lostsidedead.com");
+    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter written by Jared Bruni</b>\nhttp://lostsidedead.com");
 }
 
-void FilterWindow::filterChange(int filter, int index) {
+void FilterWindow::filterChange(unsigned int red, unsigned int green, unsigned int blue, int filter, int index) {
     // preform filter action
     current_image = original_image;
-    alphaFlame(current_image, filter, index);
+    alphaFlame(current_image,red,green,blue,filter, index);
     updateScreen();
 }
 
@@ -184,23 +184,81 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
     slider->setMaximum(512);
     slider->setSingleStep(1);
     slider->setSliderPosition(1);
-    slider_index = new QLabel("1", this);
+    slider_index = new QLabel("<b>1</b>", this);
     slider_index->setGeometry(770,15,30,25);
     
     parent_window = (FilterWindow*)parent;
     
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(setPos(int)));
     connect(filter_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIndex(int)));
+    
+    red_label = new QLabel("Red: ", this);
+    red_label->setGeometry(10, 45, 25, 20);
+    slider_red = new QSlider(Qt::Horizontal, this);
+    slider_red->setGeometry(40, 45, 100, 20);
+    slider_red->setMinimum(0);
+    slider_red->setMaximum(255);
+    slider_red->setSingleStep(1);
+    slider_red->setSliderPosition(0);
+    red_index = new QLabel("<b>0</b>", this);
+    red_index->setGeometry(145, 45, 25, 20);
+    
+    connect(slider_red, SIGNAL(valueChanged(int)), this, SLOT(setSliderText(int)));
+    
+    green_label = new QLabel("Green: ", this);
+    green_label->setGeometry(170, 45, 35, 20);
+    slider_green = new QSlider(Qt::Horizontal, this);
+    slider_green->setGeometry(210, 45, 100, 20);
+    slider_green->setMinimum(0);
+    slider_green->setMaximum(255);
+    slider_green->setSingleStep(1);
+    slider_green->setSliderPosition(0);
+    green_index = new QLabel("<b>0</b>", this);
+    green_index->setGeometry(315, 45, 25, 20);
+    
+    connect(slider_green, SIGNAL(valueChanged(int)), this, SLOT(setSliderText(int)));
+    
+    blue_label = new QLabel("Blue: ", this);
+    blue_label->setGeometry(340, 45, 25, 20);
+    slider_blue = new QSlider(Qt::Horizontal, this);
+    slider_blue->setGeometry(370, 45, 100, 20);
+    slider_blue->setMinimum(0);
+    slider_blue->setMaximum(255);
+    slider_blue->setSingleStep(1);
+    slider_blue->setSliderPosition(0);
+    blue_index = new QLabel("<b>0</b>", this);
+    blue_index->setGeometry(475, 45, 25, 20);
+    
+    connect(slider_blue, SIGNAL(valueChanged(int)), this, SLOT(setSliderText(int)));
+    
 }
 
 void FilterControl::updateIndex(int) {
-    parent_window->filterChange(filter_combo->currentIndex(), slider->sliderPosition());
+    parent_window->filterChange(slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), filter_combo->currentIndex(), slider->sliderPosition());
 }
 
 void FilterControl::setPos(int pos) {
     QString text;
     QTextStream stream(&text);
-    stream << pos;
+    stream << "<b>" << pos << "</b>";
     slider_index->setText(text);
-    parent_window->filterChange(filter_combo->currentIndex(), pos);
+    parent_window->filterChange(slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), filter_combo->currentIndex(), pos);
 }
+
+void FilterControl::setSliderText(int) {
+    QString red_text;
+    QTextStream red_stream(&red_text);
+    red_stream << "<b>" << slider_red->sliderPosition() << "</b>";
+    red_index->setText(red_text);
+    QString green_text;
+    QTextStream green_stream(&green_text);
+    green_stream << "<b>" << slider_green->sliderPosition() << "</b>";
+    green_index->setText(green_text);
+    QString blue_text;
+    QTextStream blue_stream(&blue_text);
+    blue_stream << "<b>" << slider_blue->sliderPosition() << "</b>";
+    blue_index->setText(blue_text);
+    parent_window->filterChange(slider_red->sliderPosition(), slider_green->sliderPosition(), slider_blue->sliderPosition(), filter_combo->currentIndex(), slider->sliderPosition());
+}
+
+

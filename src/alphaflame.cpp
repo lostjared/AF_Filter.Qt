@@ -10,13 +10,12 @@ unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value) {
     return ptr;
 }
 
-void alphaFlame(QImage &image, int filter_num, int iteration) {
-    std::cout << "Applying Filter #: " << filter_num << "\n";
+void alphaFlame(QImage &image, unsigned int red, unsigned int green, unsigned int blue, int filter_num, int iteration) {
+    //std::cout << "Applying Filter #: " << filter_num << "\n";
     
     static double count = 1.0;
     int rev = 0;
     bool neg = false;
-    unsigned int red = 0, green = 0, blue = 0;
     unsigned int randomNumber = 1;
     
     for(int i = 0; i < image.width(); ++i) {
@@ -28,11 +27,8 @@ void alphaFlame(QImage &image, int filter_num, int iteration) {
             
             QRgb val = qRgb(buffer[2], buffer[1], buffer[0]);
             image.setPixel(i, z, val);
-            
-            //std::cout << (unsigned int)buffer[0] << ", " << (unsigned int )buffer[1] << ", " << (unsigned int) buffer[2] << "\n";
-        }
+            }
     }
-    
 }
 
 
@@ -488,9 +484,11 @@ void changePixel(unsigned int current_filterx, int width, int height, QImage &fu
             break;
     }
     
-    buffer[0] += red;
+    
+    buffer[2] += red;
     buffer[1] += green;
-    buffer[2] += blue;
+    buffer[0] += blue;
+    
     
     if(negated == true) {
         buffer[0] = ~buffer[0];
