@@ -7,4 +7,4 @@ Then to run the program use in the terminal
 AF_Filter
 
 
-- Jared 
+ Jared 
