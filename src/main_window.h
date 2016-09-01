@@ -16,6 +16,13 @@ class FilterControl : QDialog {
     Q_OBJECT
 public:
     FilterControl(QWidget *parent = 0);
+    bool isNeg() const;
+    unsigned int redColor() const;
+    unsigned int greenColor() const;
+    unsigned int blueColor() const;
+    unsigned int rgbIndex() const;
+    unsigned int currentFilter() const;
+    unsigned int filterPosition() const;
 public slots:
     void setSource();
     void updateIndex(int pos);
@@ -44,6 +51,7 @@ public:
     void updateScreen();
     void resizeEvent(QResizeEvent *event);
     void filterChange(bool neg_state, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter, int iteration);
+    void updateFilter();
 public slots:
     void fileLoad();
     void fileSave();

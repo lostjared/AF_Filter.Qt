@@ -127,6 +127,7 @@ void FilterWindow::fileSet() {
     if(image_set) {
         image_list.push_back(original_image);
         original_image = current_image;
+        updateFilter();
     }
 }
 
@@ -181,6 +182,10 @@ void FilterWindow::helpHowTo() {
 
 void FilterWindow::helpAbout() {
     QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter " + QString(VER_STRING) + " written by Jared Bruni</b>\n<br>Home Page:<a href=\"http://lostsidedead.com\">http://lostsidedead.com</a>\n<br><br>Social Media Accounts<br><br><a href=\"http://facebook.com/LostSideDead0x\">Facebook</a>\n<br><a href=\"http://github.com/lostjared\">GitHub</a>\n<br><a href=\"http://instagram.com/jaredbruni\">Instagram</a>\n<br><a href=\"http://twitter.com/jaredbruni\">Twitter</a><br>\n");
+}
+
+void FilterWindow::updateFilter() {
+    filterChange(filter_control->isNeg(), filter_control->redColor(), filter_control->greenColor(), filter_control->blueColor(), filter_control->rgbIndex(), filter_control->currentFilter(), filter_control->filterPosition());
 }
 
 void FilterWindow::filterChange(bool neg_state, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter, int index) {
@@ -284,6 +289,33 @@ FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
     setAsSource = new QPushButton("Set Current", this);
     setAsSource->setGeometry(675, 45, 100, 20);
     connect(setAsSource, SIGNAL(clicked()), this, SLOT(setSource()));
+}
+
+bool FilterControl::isNeg() const {
+    return neg_box->isChecked() ? true : false;
+}
+
+unsigned int FilterControl::redColor() const {
+    return slider_red->sliderPosition();
+}
+
+unsigned int FilterControl::greenColor() const {
+    return slider_green->sliderPosition();
+}
+
+unsigned int FilterControl::blueColor() const {
+    return slider_blue->sliderPosition();
+}
+
+unsigned int FilterControl::rgbIndex() const {
+    return rgb_combo->currentIndex();
+}
+
+unsigned int FilterControl::currentFilter() const {
+    return filter_combo->currentIndex();
+}
+unsigned int FilterControl::filterPosition() const {
+    return slider->sliderPosition();
 }
 
 void FilterControl::setSource() {
