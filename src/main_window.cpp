@@ -180,7 +180,7 @@ void FilterWindow::helpHowTo() {
 }
 
 void FilterWindow::helpAbout() {
-    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter written by Jared Bruni</b>\nhttp://lostsidedead.com");
+    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter written by Jared Bruni</b>\n<br>Home Page:<a href=\"http://lostsidedead.com\">http://lostsidedead.com</a>\n<br><br>Social Media Accounts<br><br><a href=\"http://facebook.com/LostSideDead0x\">Facebook</a>\n<br><a href=\"http://github.com/lostjared\">GitHub</a>\n<br><a href=\"http://instagram.com/jaredbruni\">Instagram</a>\n<br><a href=\"http://twitter.com/jaredbruni\">Twitter</a><br>\n");
 }
 
 void FilterWindow::filterChange(bool neg_state, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter, int index) {
