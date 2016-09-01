@@ -20,19 +20,21 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             unsigned int value = 0;
             unsigned char *buffer = pixelAt(image, i, z, value);
             
-            changePixel(filter_num, image.width(), image.height(), image, i, z, buffer, iteration,&count, rev, neg, red, green, blue, randomNumber);
+            changePixel(filter_num, image, i, z, buffer, iteration, &count, rev, neg, red, green, blue, randomNumber);
             
-            QRgb val = qRgb(buffer[2], buffer[1], buffer[0]);
-            image.setPixel(i, z, val);
-            }
+           	QRgb val = qRgb(buffer[2], buffer[1], buffer[0]);
+           	image.setPixel(i, z, val);
+        }
     }
     
     std::cout << "Applied Filter #: " << filter_num << "\n";
-
 }
 
 
-void changePixel(unsigned int current_filterx, int width, int height, QImage &full_buffer, int i, int z, unsigned char *buffer, double pos, double *count, int reverse, bool negated, unsigned int red, unsigned int green, unsigned int blue, unsigned int randomNumber) {
+void changePixel(unsigned int current_filterx, QImage &full_buffer, int i, int z, unsigned char *buffer, double pos, double *count, int reverse, bool negated, unsigned int red, unsigned int green, unsigned int blue, unsigned int randomNumber) {
+    
+    int width = full_buffer.width();
+    int height = full_buffer.height();
     
     
     switch(current_filterx) {
