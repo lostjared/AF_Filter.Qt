@@ -176,11 +176,11 @@ void FilterWindow::editPaste() {
 }
 
 void FilterWindow::helpHowTo() {
-    QMessageBox::information(this, "Information On How to Use", "Fill this out");
+    QMessageBox::information(this, "Information On How to Use", "You simply load an image, then drag the large slider from left to right until it looks the way you want it. Then move the red/green/blue sliders to adjust the color. After you do that, you can set the image as the current source image and chain together another filter. Once you have your image looking the way you want it to you can save from the File menu as a lossless PNG image.");
 }
 
 void FilterWindow::helpAbout() {
-    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter written by Jared Bruni</b>\n<br>Home Page:<a href=\"http://lostsidedead.com\">http://lostsidedead.com</a>\n<br><br>Social Media Accounts<br><br><a href=\"http://facebook.com/LostSideDead0x\">Facebook</a>\n<br><a href=\"http://github.com/lostjared\">GitHub</a>\n<br><a href=\"http://instagram.com/jaredbruni\">Instagram</a>\n<br><a href=\"http://twitter.com/jaredbruni\">Twitter</a><br>\n");
+    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter " + QString(VER_STRING) + " written by Jared Bruni</b>\n<br>Home Page:<a href=\"http://lostsidedead.com\">http://lostsidedead.com</a>\n<br><br>Social Media Accounts<br><br><a href=\"http://facebook.com/LostSideDead0x\">Facebook</a>\n<br><a href=\"http://github.com/lostjared\">GitHub</a>\n<br><a href=\"http://instagram.com/jaredbruni\">Instagram</a>\n<br><a href=\"http://twitter.com/jaredbruni\">Twitter</a><br>\n");
 }
 
 void FilterWindow::filterChange(bool neg_state, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter, int index) {
