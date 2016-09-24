@@ -13,11 +13,53 @@ unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value) {
     return ptr;
 }
 
-void GlitchSort(QImage &image, int iteration) {
+void ApplyOptions(unsigned char *buffer, bool negated, int red, int green, int blue, int reverse) {
+   
+    buffer[2] += red;
+    buffer[1] += green;
+    buffer[0] += blue;
+    
+    
+    if(negated == true) {
+        buffer[0] = ~buffer[0];
+        buffer[1] = ~buffer[1];
+        buffer[2] = ~buffer[2];
+    }
+    
+    unsigned char buf[3];
+    buf[0] = buffer[0];
+    buf[1] = buffer[1];
+    buf[2] = buffer[2];
+    
+    switch(reverse) {
+        case 0://normal
+            break;
+        case 1:
+            buffer[0] = buf[2];
+            buffer[1] = buf[1];
+            buffer[2] = buf[0];
+            break;
+        case 2:
+            buffer[0] = buf[1];
+            buffer[1] = buf[2];
+            buffer[2] = buf[0];
+            break;
+        case 3:
+            buffer[0] = buf[2];
+            buffer[1] = buf[0];
+            buffer[2] = buf[1];
+            break;
+        case 4:
+            buffer[0] = buf[1];
+            buffer[1] = buf[0];
+            buffer[2] = buf[2];
+            break;
+    }
+}
 
+void GlitchSort(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
     int w = image.width();
     int h = image.height();
-    
     static std::vector<unsigned int> v;
     v.reserve(w);
     
@@ -37,6 +79,7 @@ void GlitchSort(QImage &image, int iteration) {
             rgb[2] = pixel[0] + (iteration)*value[0];
             rgb[1] = pixel[1] + (iteration)*value[1];
             rgb[0] = pixel[2] + (iteration)*value[2];
+            ApplyOptions(rgb, neg, red, green, blue, rev);
             QRgb rgbvalue = qRgb(rgb[0], rgb[1], rgb[2]);
             image.setPixel(i, z, rgbvalue);
         }
@@ -46,7 +89,7 @@ void GlitchSort(QImage &image, int iteration) {
 
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     if(filter_num == 36) {
-        GlitchSort(image, iteration);
+        GlitchSort(image, neg, iteration, red, green, blue, rev);
         return;
     }
     static double count = 1.0;
@@ -515,45 +558,5 @@ void changePixel(unsigned int current_filterx, QImage &full_buffer, int i, int z
             break;
     }
     
-    
-    buffer[2] += red;
-    buffer[1] += green;
-    buffer[0] += blue;
-    
-    
-    if(negated == true) {
-        buffer[0] = ~buffer[0];
-        buffer[1] = ~buffer[1];
-        buffer[2] = ~buffer[2];
-    }
-    
-    unsigned char buf[3];
-    buf[0] = buffer[0];
-    buf[1] = buffer[1];
-    buf[2] = buffer[2];
-    
-    switch(reverse) {
-        case 0://normal
-            break;
-        case 1:
-            buffer[0] = buf[2];
-            buffer[1] = buf[1];
-            buffer[2] = buf[0];
-            break;
-        case 2:
-            buffer[0] = buf[1];
-            buffer[1] = buf[2];
-            buffer[2] = buf[0];
-            break;
-        case 3:
-            buffer[0] = buf[2];
-            buffer[1] = buf[0];
-            buffer[2] = buf[1];
-            break;
-        case 4:
-            buffer[0] = buf[1];
-            buffer[1] = buf[0];
-            buffer[2] = buf[2];
-            break;
-    }
+    ApplyOptions(buffer, negated, red, green, blue, reverse);
 }
