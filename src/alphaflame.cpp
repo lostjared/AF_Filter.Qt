@@ -87,11 +87,50 @@ void GlitchSort(QImage &image, bool neg, int iteration, int red, int green, int 
     }
 }
 
-void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
-    if(filter_num == 36) {
-        GlitchSort(image, neg, iteration, red, green, blue, rev);
-        return;
+
+void GlitchSortVertical(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
+    int w = image.width();
+    int h = image.height();
+    static std::vector<unsigned int> v;
+    v.reserve(w);
+    
+    for(int i = 0; i < w; ++i) {
+        for(int z = 0; z < h; ++z) {
+            unsigned int value = 0;
+            pixelAt(image, i, z, value);
+            v.push_back(value);
+        }
+        std::sort(v.begin(), v.end());
+        for(int z = 0; z < h; ++z) {
+            unsigned int blend = 0;
+            unsigned char *value = (unsigned char*)&v[i];
+            unsigned char *pixel = pixelAt(image, i, z, blend);
+            unsigned char rgb[3];
+            rgb[2] = pixel[0] + (iteration)*value[0];
+            rgb[1] = pixel[1] + (iteration)*value[1];
+            rgb[0] = pixel[2] + (iteration)*value[2];
+            ApplyOptions(rgb, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(rgb[0], rgb[1], rgb[2]);
+            image.setPixel(i, z, rgbvalue);
+        }
+        v.erase(v.begin(), v.end());
     }
+}
+
+
+void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
+    
+    switch(filter_num) {
+        case 36:
+            GlitchSort(image, neg, iteration, red, green, blue, rev);
+            return;
+            break;
+        case 37:
+            GlitchSortVertical(image, neg, iteration, red, green, blue, rev);
+            return;
+            break;
+    }
+    
     static double count = 1.0;
     unsigned int randomNumber = 1;
     for(int i = 0; i < image.width(); ++i) {
