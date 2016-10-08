@@ -91,8 +91,10 @@ struct Pixel {
     unsigned char rgb[3];
 };
 
+unsigned int color = 0;
+
 bool operator<(const Pixel &p1, const Pixel &p2) {
-    return (p1.rgb[1] > p2.rgb[1]);
+    return (p1.rgb[color] > p2.rgb[color]);
 }
 
 void GlitchSortByChannel(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
@@ -112,6 +114,8 @@ void GlitchSortByChannel(QImage &image, bool neg, int iteration, int red, int gr
             v.push_back(p);
         }
         std::sort(v.begin(), v.end());
+        ++color;
+        if(color >= 3) color = 0;
         for(int i = 0; i < w; ++i) {
             
             unsigned int blend = 0;
