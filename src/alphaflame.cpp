@@ -87,6 +87,47 @@ void GlitchSort(QImage &image, bool neg, int iteration, int red, int green, int 
     }
 }
 
+struct Pixel {
+    unsigned char rgb[3];
+};
+
+bool operator<(const Pixel &p1, const Pixel &p2) {
+    return (p1.rgb[1] > p2.rgb[1]);
+}
+
+void GlitchSortByChannel(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
+    int w = image.width();
+    int h = image.height();
+    static std::vector<Pixel> v;
+    v.reserve(w);
+    
+    for(int z = 0; z < h; ++z) {
+        for(int i = 0; i < w; ++i) {
+            unsigned int value = 0;
+            unsigned char *rgb = pixelAt(image, i, z, value);
+            Pixel p;
+            p.rgb[0] = rgb[0];
+            p.rgb[1] = rgb[1];
+            p.rgb[2] = rgb[2];
+            v.push_back(p);
+        }
+        std::sort(v.begin(), v.end());
+        for(int i = 0; i < w; ++i) {
+            
+            unsigned int blend = 0;
+            unsigned char *value = (unsigned char*)&v[i].rgb[0];
+            unsigned char *pixel = pixelAt(image, i, z, blend);
+            unsigned char rgb[3];
+            rgb[2] = pixel[0] + (iteration)*value[0];
+            rgb[1] = pixel[1] + (iteration)*value[1];
+            rgb[0] = pixel[2] + (iteration)*value[2];
+            ApplyOptions(rgb, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(rgb[0], rgb[1], rgb[2]);
+            image.setPixel(i, z, rgbvalue);
+        }
+        v.erase(v.begin(), v.end());
+    }
+}
 
 void GlitchSortVertical(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
     int w = image.width();
@@ -118,6 +159,7 @@ void GlitchSortVertical(QImage &image, bool neg, int iteration, int red, int gre
 }
 
 
+
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     switch(filter_num) {
@@ -129,6 +171,10 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             GlitchSortVertical(image, neg, iteration, red, green, blue, rev);
             return;
             break;
+        case 38:
+            GlitchSortByChannel(image, neg, iteration, red, green, blue, rev);
+            break;
+            
     }
     
     static double count = 1.0;
