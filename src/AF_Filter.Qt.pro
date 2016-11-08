@@ -7,7 +7,7 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
-
+QT += core widgets gui
 QMAKE_CXXFLAGS += -std=c++11
 
 

@@ -3,8 +3,25 @@
 
 #define VER_STRING "1.01"
 
-#include<QtGui>
 #include<QtCore>
+#include<QWidget>
+#include<QDialog>
+#include<QLabel>
+#include<QMenu>
+#include<QMenuBar>
+#include<QPushButton>
+#include<QProgressBar>
+#include<QStatusBar>
+#include<QLineEdit>
+#include<QMainWindow>
+#include<QMessageBox>
+#include<QFileDialog>
+#include<QComboBox>
+#include<QSlider>
+#include<QCheckBox>
+#include<QApplication>
+#include<QPainter>
+#include<QClipboard>
 #include<iostream>
 #include<vector>
 #include "alphaflame.h"
