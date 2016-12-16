@@ -1,6 +1,6 @@
 # AF_Filter.Qt
 
-Cross platform version of AF_Filter using Qt4.
+Cross platform version of AF_Filter using Qt
 Supported Operating Systems: Windows, Linux, MacOS X.
 
 Now it is just time to come up with better filters since  the GUI is complete
