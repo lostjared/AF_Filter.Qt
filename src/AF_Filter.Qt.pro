@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = AF_Filter
 DEPENDPATH += .
 INCLUDEPATH += .
 
