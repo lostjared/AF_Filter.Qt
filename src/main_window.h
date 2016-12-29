@@ -1,7 +1,7 @@
 #ifndef __AF_FILTER_H__WIN
 #define __AF_FILTER_H__WIN
 
-#define VER_STRING "1.01"
+#define VER_STRING "1.02"
 
 #include<QtCore>
 #include<QWidget>

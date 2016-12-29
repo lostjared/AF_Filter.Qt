@@ -177,7 +177,29 @@ void GlitchSortVertical(QImage &image, bool neg, int iteration, int red, int gre
     }
 }
 
+void MirrorBlend(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
+    int w = image.width();
+    int h = image.height();
+    
+    for(int z = 2; z < h-2; ++z) {
+        for(int i = 2; i < w-2; ++i) {
+            unsigned int blend = 0, mir_1 = 0, mir_2 = 0, mir_3 = 0;;
+            unsigned char *pixel = pixelAt(image, i, z, blend);
+            unsigned char *pixelA = pixelAt(image, (w-i), (h-z), mir_1);
+            unsigned char *pixelB = pixelAt(image, (w-i), z, mir_2);
+            unsigned char *pixelC = pixelAt(image, i, (h-z), mir_3);
+            
+            unsigned char rgb[3];
+            rgb[0] = pixel[0]+(pixelA[0]*(iteration*0.1));
+            rgb[1] = pixel[1]+(pixelB[1]*(iteration*0.1));
+            rgb[2] = pixel[2]+(pixelC[2]*(iteration*0.1));
 
+            ApplyOptions(rgb, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(rgb[0], rgb[1], rgb[2]);
+            image.setPixel(i, z, rgbvalue);
+        }
+    }
+}
 
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
@@ -192,6 +214,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             break;
         case 38:
             GlitchSortByChannel(image, neg, iteration, red, green, blue, rev);
+            break;
+        case 39:
+            MirrorBlend(image, neg, iteration, red, green, blue, rev);
             break;
             
     }
