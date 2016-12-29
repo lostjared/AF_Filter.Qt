@@ -192,9 +192,9 @@ void UniqueMirrorBlend(QImage &image, bool neg, int iteration, int red, int gree
             unsigned char *pixelC = pixelAt(copyof, i, (h-z), mir_3);
             
             unsigned char rgb[3];
-            rgb[0] = pixel[0]+(pixelA[0]*(iteration*0.1));
+            rgb[2] = pixel[0]+(pixelA[0]*(iteration*0.1));
             rgb[1] = pixel[1]+(pixelB[1]*(iteration*0.1));
-            rgb[2] = pixel[2]+(pixelC[2]*(iteration*0.1));
+            rgb[0] = pixel[2]+(pixelC[2]*(iteration*0.1));
 
             ApplyOptions(rgb, neg, red, green, blue, rev);
             QRgb rgbvalue = qRgb(rgb[0], rgb[1], rgb[2]);
