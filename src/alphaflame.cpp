@@ -177,16 +177,19 @@ void GlitchSortVertical(QImage &image, bool neg, int iteration, int red, int gre
     }
 }
 
+
+
 void UniqueMirrorBlend(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
     int w = image.width();
     int h = image.height();
     
     QImage copyof = image;
     
-    for(int z = 1; z < h-2; ++z) {
-        for(int i = 1; i < w-2; ++i) {
+    for(int z =  1; z < h-1; ++z) {
+        for(int i = 1; i < w-1; ++i) {
             unsigned int blend = 0, mir_1 = 0, mir_2 = 0, mir_3 = 0;;
             unsigned char *pixel = pixelAt(image, i, z, blend);
+            
             unsigned char *pixelA = pixelAt(copyof, (w-i), (h-z), mir_1);
             unsigned char *pixelB = pixelAt(copyof, (w-i), z, mir_2);
             unsigned char *pixelC = pixelAt(copyof, i, (h-z), mir_3);
