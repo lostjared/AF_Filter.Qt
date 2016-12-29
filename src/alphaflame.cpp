@@ -177,7 +177,7 @@ void GlitchSortVertical(QImage &image, bool neg, int iteration, int red, int gre
     }
 }
 
-void MirrorBlend(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
+void UniqueMirrorBlend(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
     int w = image.width();
     int h = image.height();
     
