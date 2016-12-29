@@ -9,7 +9,7 @@ INCLUDEPATH += .
 
 QT += core widgets gui
 QMAKE_CXXFLAGS += -std=c++11
-
+RESOURCES += qresource.qrc
 
 # Input
 HEADERS += main_window.h alphaflame.h

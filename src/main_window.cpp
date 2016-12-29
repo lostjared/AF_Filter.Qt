@@ -12,6 +12,10 @@ FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     //Qt::WindowFlags flags = filter_control->windowFlags();
     filter_control->setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::CustomizeWindowHint |  Qt::WindowStaysOnTopHint | Qt::Tool);
     filter_control->show();
+    
+    QPixmap icon = QPixmap(":/images/icon.png");
+    setWindowIcon(QIcon(icon));
+    
 }
 
 void FilterWindow::createMenu() {
