@@ -216,7 +216,7 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             GlitchSortByChannel(image, neg, iteration, red, green, blue, rev);
             break;
         case 39:
-            MirrorBlend(image, neg, iteration, red, green, blue, rev);
+            UniqueMirrorBlend(image, neg, iteration, red, green, blue, rev);
             break;
             
     }
