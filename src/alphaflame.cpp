@@ -181,13 +181,15 @@ void UniqueMirrorBlend(QImage &image, bool neg, int iteration, int red, int gree
     int w = image.width();
     int h = image.height();
     
+    QImage copyof = image;
+    
     for(int z = 2; z < h-2; ++z) {
         for(int i = 2; i < w-2; ++i) {
             unsigned int blend = 0, mir_1 = 0, mir_2 = 0, mir_3 = 0;;
             unsigned char *pixel = pixelAt(image, i, z, blend);
-            unsigned char *pixelA = pixelAt(image, (w-i), (h-z), mir_1);
-            unsigned char *pixelB = pixelAt(image, (w-i), z, mir_2);
-            unsigned char *pixelC = pixelAt(image, i, (h-z), mir_3);
+            unsigned char *pixelA = pixelAt(copyof, (w-i), (h-z), mir_1);
+            unsigned char *pixelB = pixelAt(copyof, (w-i), z, mir_2);
+            unsigned char *pixelC = pixelAt(copyof, i, (h-z), mir_3);
             
             unsigned char rgb[3];
             rgb[0] = pixel[0]+(pixelA[0]*(iteration*0.1));
