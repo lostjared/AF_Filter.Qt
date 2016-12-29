@@ -11,6 +11,11 @@ QT += core widgets gui
 QMAKE_CXXFLAGS += -std=c++11
 RESOURCES += qresource.qrc
 
+# Mac Icon
+ICON = mac-icon.icns
+# Windows Icon
+RC_FILE = win-icon.rc
+
 # Input
 HEADERS += main_window.h alphaflame.h
 SOURCES += main.cpp main_window.cpp alphaflame.cpp
