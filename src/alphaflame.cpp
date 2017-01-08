@@ -206,6 +206,25 @@ void UniqueMirrorBlend(QImage &image, bool neg, int iteration, int red, int gree
     }
 }
 
+void Reverse(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
+	const int w = image.width(), h = image.height();
+    QImage copyOf = image;
+    for(int z = 0; z < h; ++z) {
+        for(int i = 1; i < w-1; ++i) {
+            unsigned int p1;
+            unsigned char *pix1;
+            pix1 = pixelAt(copyOf, (w-i), z, p1);
+            unsigned char rgb[3];
+            rgb[0] = pix1[0]*(1+(0.1*iteration));
+            rgb[1] = pix1[1]*(1+(0.1*iteration));
+            rgb[2] = pix1[2]*(1+(0.1*iteration));
+            ApplyOptions(rgb, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(rgb[2], rgb[1], rgb[0]);
+            image.setPixel(i, z, rgbvalue);
+        }
+    }
+}
+
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     switch(filter_num) {
@@ -219,11 +238,16 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             break;
         case 38:
             GlitchSortByChannel(image, neg, iteration, red, green, blue, rev);
+            return;
             break;
         case 39:
             UniqueMirrorBlend(image, neg, iteration, red, green, blue, rev);
+            return;
             break;
-            
+        case 40:
+            Reverse(image, neg, iteration, red, green, blue, rev);
+            return;
+            break;
     }
     
     static double count = 1.0;
