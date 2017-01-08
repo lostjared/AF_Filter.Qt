@@ -231,23 +231,18 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
         case 36:
             GlitchSort(image, neg, iteration, red, green, blue, rev);
             return;
-            break;
         case 37:
             GlitchSortVertical(image, neg, iteration, red, green, blue, rev);
             return;
-            break;
         case 38:
             GlitchSortByChannel(image, neg, iteration, red, green, blue, rev);
             return;
-            break;
         case 39:
             UniqueMirrorBlend(image, neg, iteration, red, green, blue, rev);
             return;
-            break;
         case 40:
             Reverse(image, neg, iteration, red, green, blue, rev);
             return;
-            break;
     }
     
     static double count = 1.0;
