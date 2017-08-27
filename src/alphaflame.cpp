@@ -292,6 +292,46 @@ void UpDown(QImage &image, bool neg, int iteration, int red, int green, int blue
     }
 }
 
+void LeftRight(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
+    unsigned int w = image.width();// frame width
+    unsigned int h = image.height();// frame height
+    double pos = iteration;
+    double alpha = 1.0;
+    bool order = true;
+    for(unsigned int z = 0; z < h; ++z) {
+        if(order == true) {
+            order = false;
+            for(unsigned int i = 0; i < w; ++i) {
+                unsigned int p1;
+                unsigned char *pixel;
+                pixel = pixelAt(image, i, z, p1);
+                for(unsigned int q = 0; q < 3; ++q)
+                    pixel[q] = alpha+(pixel[q]*pos);
+                
+                ApplyOptions(pixel, neg, red, green, blue, rev);
+                QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+                image.setPixel(i, z, rgbvalue);
+            }
+            alpha += 0.1;
+        } else {
+            order = true;
+            for(unsigned int i = w-1; i > 1; --i) {
+                unsigned int p1;
+                unsigned char *pixel;
+                pixel = pixelAt(image, i, z, p1);
+                for(unsigned int q = 0; q < 3; ++q)
+                    pixel[q] = alpha-(pixel[q]*pos);
+                
+                ApplyOptions(pixel, neg, red, green, blue, rev);
+                QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+                image.setPixel(i, z, rgbvalue);
+            }
+            
+            alpha += 0.1;
+        }
+    }
+}
+
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     switch(filter_num) {
@@ -315,6 +355,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             return;
         case 42:
             UpDown(image, neg, iteration, red, green, blue, rev);
+            return;
+        case 43:
+            LeftRight(image, neg, iteration, red, green, blue, rev);
             return;
     }
     
