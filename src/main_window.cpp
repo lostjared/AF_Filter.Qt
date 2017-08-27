@@ -209,7 +209,7 @@ const char *filter_names[] = { "AC Self AlphaBlend", "Reverse Self AlphaBlend",
     "Positive/Negative", "z+1 Blend", "Diamond Pattern", "Pixelated Shift","Pixelated Mix",
     "Color Accumulate", "Color Accumulate #2", "Color Accumulate #3", "Angle",
     "Vertical Average", "Circular Blend", "Average Blend", "~Divide", "Mix", "Random Number",
-    "Gradient Repeat", "GlitchSort", "GlitchSort Vertical", "GlitchSort By Channel","UniqueMirrorBlend", "Reverse", 0 };
+    "Gradient Repeat", "GlitchSort", "GlitchSort Vertical", "GlitchSort By Channel","UniqueMirrorBlend", "Reverse","BlendScanLines", 0 };
 
 
 FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {

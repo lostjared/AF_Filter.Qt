@@ -225,6 +225,29 @@ void Reverse(QImage &image, bool neg, int iteration, int red, int green, int blu
     }
 }
 
+void BlendScanLines(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev) {
+    unsigned int w = image.width();// frame width
+    unsigned int h = image.height();// frame height
+    static unsigned int cnt = 0;
+    for(unsigned int z = 0; z < h; ++z) {
+        int r = rand()%255;
+        for(unsigned int i = 0; i < w; ++i) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, i, z, p1);
+            pixel[cnt] += r*iteration;
+            ++r;
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(i, z, rgbvalue);
+            ++cnt;
+            if(cnt > 2) {
+                cnt = 0;
+            }
+        }
+    }
+}
+
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     switch(filter_num) {
@@ -242,6 +265,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             return;
         case 40:
             Reverse(image, neg, iteration, red, green, blue, rev);
+            return;
+        case 41:
+            BlendScanLines(image, neg, iteration, red, green, blue, rev);
             return;
     }
     
