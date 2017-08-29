@@ -185,7 +185,7 @@ void FilterWindow::helpHowTo() {
 }
 
 void FilterWindow::helpAbout() {
-    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter " + QString(VER_STRING) + " written by Jared Bruni</b>\n<br>Home Page:<a href=\"http://lostsidedead.com\">http://lostsidedead.com</a>\n<br><br>Social Media Accounts<br><br><a href=\"http://facebook.com/LostSideDead0x\">Facebook</a>\n<br><a href=\"http://github.com/lostjared\">GitHub</a>\n<br><a href=\"http://instagram.com/jaredbruni\">Instagram</a>\n<br><a href=\"http://twitter.com/jaredbruni\">Twitter</a><br>\n");
+    QMessageBox::information(this, "About AF_Filter.Qt", "<b>AlphaFlame Filter " + QString(VER_STRING) + " written by Jared Bruni</b>\n<br><br><b>This software is dedicated to all the people that struggle with mental illness.</b><br><br><br>Home Page:<a href=\"http://lostsidedead.com\">http://lostsidedead.com</a>\n<br><br>Social Media Accounts<br><br><a href=\"http://facebook.com/LostSideDead0x\">Facebook</a>\n<br><a href=\"http://github.com/lostjared\">GitHub</a>\n<br><a href=\"http://instagram.com/jaredbruni\">Instagram</a>\n<br><a href=\"http://twitter.com/jaredbruni\">Twitter</a><br>\n");
 }
 
 void FilterWindow::updateFilter() {
@@ -209,7 +209,8 @@ const char *filter_names[] = { "AC Self AlphaBlend", "Reverse Self AlphaBlend",
     "Positive/Negative", "z+1 Blend", "Diamond Pattern", "Pixelated Shift","Pixelated Mix",
     "Color Accumulate", "Color Accumulate #2", "Color Accumulate #3", "Angle",
     "Vertical Average", "Circular Blend", "Average Blend", "~Divide", "Mix", "Random Number",
-    "Gradient Repeat", "GlitchSort", "GlitchSort Vertical", "GlitchSort By Channel","UniqueMirrorBlend", "Reverse","BlendScanLines","UpDown","LeftRight", 0 };
+    "Gradient Repeat", "GlitchSort", "GlitchSort Vertical", "GlitchSort By Channel","UniqueMirrorBlend",
+    "Reverse","BlendScanLines","UpDown","LeftRight","XorMultiBlend", 0 };
 
 
 FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {

@@ -332,6 +332,28 @@ void LeftRight(QImage &image, bool neg, unsigned int iteration, unsigned int red
     }
 }
 
+
+void XorMultiBlend(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
+    int w = image.width();// frame width
+    int h = image.height();// frame height
+    double pos = iteration;
+    double s[3] = { pos, -pos, pos };
+    for(int y = h-1; y > 0; --y) {
+        for(int x = w-1; x > 0; --x) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, x, y, p1);
+            pixel[0] = (pixel[0]^(int)s[0])*iteration;
+            pixel[1] = (pixel[1]^(int)s[1])*iteration;
+            pixel[2] = (pixel[2]^(int)s[2])*iteration;
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(x, y, rgbvalue);
+        }
+    }
+}
+
+
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     switch(filter_num) {
@@ -358,6 +380,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             return;
         case 43:
             LeftRight(image, neg, iteration, red, green, blue, rev);
+            return;
+        case 44:
+            XorMultiBlend(image, neg, iteration, red, green, blue, rev);
             return;
     }
     
