@@ -177,6 +177,7 @@ void FilterWindow::editPaste() {
     if(mimedata->hasImage()) {
         original_image = qvariant_cast<QImage>(mimedata->imageData());
         current_image = original_image;
+        start_image = original_image;
         image_set = true;
         updateScreen();
     }
