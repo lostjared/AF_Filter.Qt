@@ -1,5 +1,6 @@
 #include "main_window.h"
 
+QImage start_image;
 
 FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     setGeometry(100, 100, 800, 600);
@@ -117,6 +118,7 @@ void FilterWindow::fileLoad() {
     if(input_file != "") {
         current_image = QImage(input_file);
         original_image = current_image;
+        start_image = current_image;
         image_list.push_back(original_image);
     	image_set = true;
     	updateScreen();
@@ -210,7 +212,7 @@ const char *filter_names[] = { "AC Self AlphaBlend", "Reverse Self AlphaBlend",
     "Color Accumulate", "Color Accumulate #2", "Color Accumulate #3", "Angle",
     "Vertical Average", "Circular Blend", "Average Blend", "~Divide", "Mix", "Random Number",
     "Gradient Repeat", "GlitchSort", "GlitchSort Vertical", "GlitchSort By Channel","UniqueMirrorBlend",
-    "Reverse","BlendScanLines","UpDown","LeftRight","XorMultiBlend","GradientLines","GradientSelf","Side2Side", 0 };
+    "Reverse","BlendScanLines","UpDown","LeftRight","XorMultiBlend","GradientLines","GradientSelf","Side2Side","BlendWithSource", 0 };
 
 
 FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
