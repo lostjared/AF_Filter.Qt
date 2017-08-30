@@ -377,6 +377,30 @@ void GradientLines(QImage &image, bool neg, unsigned int iteration, unsigned int
     }
 }
 
+void GradientSelf(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
+    int w = image.width();// frame width
+    int h = image.height();// frame height
+    static unsigned int count = 0, index = 0;
+    double pos = iteration;
+    for(int z = 0; z < h; ++z) {
+        for(int i = 0; i < w; ++i) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, i, z, p1);
+            pixel[index] = (pixel[index]*pos)+count;
+            ++count;
+            if(count >= 255) {
+                count = 0;
+            }
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(i, z, rgbvalue);
+        }
+        ++index;
+        if(index > 2) index = 0;
+    }
+}
+
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     switch(filter_num) {
@@ -409,6 +433,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             return;
         case 45:
             GradientLines(image, neg, iteration, red, green, blue, rev);
+            return;
+        case 46:
+            GradientSelf(image, neg, iteration, red, green, blue, rev);
             return;
     }
     
