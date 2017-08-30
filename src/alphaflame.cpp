@@ -401,6 +401,29 @@ void GradientSelf(QImage &image, bool neg, unsigned int iteration, unsigned int 
     }
 }
 
+void Side2Side(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
+    int w = image.width();// frame width
+    int h = image.height();// frame height
+    double pos = iteration;
+    for(int z = 0; z < h; ++z) {
+        double total[3];
+        for(int i = 0; i < w; ++i) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, i, z, p1);
+            total[0] += (pixel[0]/2);
+            total[1] += (pixel[1]/2);
+            total[2] += (pixel[2]/2);
+            pixel[0] = pixel[0] + (total[0]*pos)*0.01;
+            pixel[1] = pixel[1] + (total[1]*pos)*0.01;
+            pixel[2] = pixel[2] + (total[2]*pos)*0.01;
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(i, z, rgbvalue);
+        }
+    }
+}
+
 void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, unsigned int blue, int rev, int filter_num, int iteration) {
     
     switch(filter_num) {
@@ -437,6 +460,10 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
         case 46:
             GradientSelf(image, neg, iteration, red, green, blue, rev);
             return;
+        case 47:
+            Side2Side(image, neg, iteration, red, green, blue, rev);
+            return;
+
     }
     
     static double count = 1.0;
