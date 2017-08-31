@@ -424,6 +424,29 @@ void Side2Side(QImage &image, bool neg, unsigned int iteration, unsigned int red
     }
 }
 
+void Top2Bottom(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
+    int w = image.width();// frame width
+    int h = image.height();// frame height
+    double pos = iteration;
+    for(int i = 0; i < w; ++i) {
+        double total[3];
+        for(int z = 0; z < h; ++z) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, i, z, p1);
+            total[0] += (pixel[0]/2);
+            total[1] += (pixel[1]/2);
+            total[2] += (pixel[2]/2);
+            pixel[0] = pixel[0] + (total[0]*pos)*0.01;
+            pixel[1] = pixel[1] + (total[1]*pos)*0.01;
+            pixel[2] = pixel[2] + (total[2]*pos)*0.01;
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(i, z, rgbvalue);
+        }
+    }
+}
+
 void BlendWithSource(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
     int w = image.width();// frame width
     int h = image.height();// frame height
@@ -486,6 +509,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             Side2Side(image, neg, iteration, red, green, blue, rev);
             return;
         case 48:
+            Top2Bottom(image, neg, iteration, red, green, blue, rev);
+            return;
+        case 49:
             BlendWithSource(image, neg, iteration, red, green, blue, rev);
             return;
 
