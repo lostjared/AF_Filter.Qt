@@ -447,6 +447,48 @@ void Top2Bottom(QImage &image, bool neg, unsigned int iteration, unsigned int re
     }
 }
 
+void Outward(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
+    int w = image.width();// frame width
+    int h = image.height();// frame height
+    double start_pos = iteration;
+    double pos = start_pos;
+    static double offset[3] = {5, 50, 100};
+    pos = start_pos;
+    for(int y = h/2; y > 0; --y) {
+        for(int x = 0; x < w; ++x) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, x, y, p1);
+            pixel[0] += (pos*offset[0]);
+            pixel[1] += (pos*offset[1]);
+            pixel[2] += (pos*offset[2]);
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(x, y, rgbvalue);
+        }
+        pos += 0.005;
+    }
+    pos = start_pos;
+    for(int y = h/2+1; y < h; ++y) {
+        for(int x = 0; x < w; ++x) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, x, y, p1);
+            pixel[0] += (pos*offset[0]);
+            pixel[1] += (pos*offset[1]);
+            pixel[2] += (pos*offset[2]);
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(x, y, rgbvalue);
+        }
+        pos += 0.005;
+    }
+    offset[0] += 12;
+    offset[1] += 6;
+    offset[2] += 3;
+    for(int i = 0; i < 3; ++i) if(offset[i] > 200) offset[i] = 0;
+}
+
 void BlendWithSource(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
     int w = image.width();// frame width
     int h = image.height();// frame height
@@ -512,10 +554,11 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             Top2Bottom(image, neg, iteration, red, green, blue, rev);
             return;
         case 49:
+            Outward(image, neg, iteration, red, green, blue, rev);
+            return;
+        case 50:
             BlendWithSource(image, neg, iteration, red, green, blue, rev);
             return;
-
-
     }
     
     static double count = 1.0;
