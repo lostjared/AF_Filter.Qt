@@ -1,3 +1,11 @@
+/*
+ 
+ Alpha Flame Filter
+ written by Jared Bruni
+ http://github.com/lostjared
+ 
+ License: GPL
+ */
 #ifndef __ALPHA_FLAME_H___
 #define __ALPHA_FLAME_H___
 

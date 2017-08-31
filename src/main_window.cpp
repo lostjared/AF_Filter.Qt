@@ -1,3 +1,12 @@
+/*
+ 
+ Alpha Flame Filter
+ written by Jared Bruni
+ http://github.com/lostjared
+ 
+ License: GPL
+ */
+
 #include "main_window.h"
 
 QImage start_image;

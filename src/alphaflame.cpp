@@ -1,3 +1,11 @@
+/*
+ 
+ Alpha Flame Filter
+ written by Jared Bruni
+ http://github.com/lostjared
+ 
+ License: GPL
+ */
 #include<QtCore>
 #include<QWidget>
 #include<QDialog>
