@@ -227,7 +227,6 @@ const char *filter_names[] = { "AC Self AlphaBlend", "Reverse Self AlphaBlend",
 
 
 FilterControl::FilterControl(QWidget *parent) : QDialog(parent) {
-    
     filter_label = new QLabel("Filter: ", this);
     filter_label->setGeometry(10, 15, 30, 20);
     

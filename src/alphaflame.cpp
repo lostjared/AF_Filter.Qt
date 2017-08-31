@@ -414,7 +414,7 @@ void Side2Side(QImage &image, bool neg, unsigned int iteration, unsigned int red
     int h = image.height();// frame height
     double pos = iteration;
     for(int z = 0; z < h; ++z) {
-        double total[3];
+        double total[3] = {0};
         for(int i = 0; i < w; ++i) {
             unsigned int p1;
             unsigned char *pixel;
@@ -437,7 +437,7 @@ void Top2Bottom(QImage &image, bool neg, unsigned int iteration, unsigned int re
     int h = image.height();// frame height
     double pos = iteration;
     for(int i = 0; i < w; ++i) {
-        double total[3];
+        double total[3] = {0};
         for(int z = 0; z < h; ++z) {
             unsigned int p1;
             unsigned char *pixel;
