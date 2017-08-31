@@ -564,6 +564,48 @@ void OutwardSquare(QImage &image, bool neg, unsigned int iteration, unsigned int
     for(int i = 0; i < 3; ++i) if(offset[i] > 200) offset[i] = 0;
 }
 
+void ShiftPixels(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
+    int offset = iteration;
+    int w = image.width();// frame width
+    int h = image.height();// frame height
+    
+    for(int z = 0; z < h; ++z) {
+        int start = 0;
+        for(int i = offset; i < w && start < w; ++i) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, i, z, p1);
+            unsigned int p2;
+            unsigned char *source;
+            source = pixelAt(image, start, z, p2);
+            pixel[0] += source[0];
+            pixel[1] += source[1];
+            pixel[2] += source[2];
+            ++start;
+            // swap colors
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(i, z, rgbvalue);
+        }
+        for(int i = 0; i < offset-1 && start < w; ++i) {
+            unsigned int p1;
+            unsigned char *pixel;
+            pixel = pixelAt(image, i, z, p1);
+            unsigned int p2;
+            unsigned char *source;
+            source = pixelAt(image, start, z, p2);
+            pixel[0] += source[0];
+            pixel[1] += source[1];
+            pixel[2] += source[2];
+            ++start;
+            ApplyOptions(pixel, neg, red, green, blue, rev);
+            QRgb rgbvalue = qRgb(pixel[2], pixel[1], pixel[0]);
+            image.setPixel(i, z, rgbvalue);
+        }
+    }
+
+}
+
 void BlendWithSource(QImage &image, bool neg, unsigned int iteration, unsigned int red, unsigned int green, unsigned int blue, int rev) {
     int w = image.width();// frame width
     int h = image.height();// frame height
@@ -635,6 +677,9 @@ void alphaFlame(QImage &image, bool neg, unsigned int red, unsigned int green, u
             OutwardSquare(image, neg, iteration, red, green, blue, rev);
             return;
         case 51:
+            ShiftPixels(image, neg, iteration, red, green, blue, rev);
+            return;
+        case 52:
             BlendWithSource(image, neg, iteration, red, green, blue, rev);
             return;
     }
