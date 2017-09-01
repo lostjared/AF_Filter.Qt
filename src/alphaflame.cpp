@@ -23,6 +23,7 @@
 #include<QComboBox>
 #include<QPainter>
 #include<QClipboard>
+#include<cmath>
 #include<iostream>
 #include<vector>
 #include<algorithm>
