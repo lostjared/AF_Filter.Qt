@@ -38,11 +38,9 @@ unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value) {
 }
 
 void ApplyOptions(unsigned char *buffer, bool negated, int red, int green, int blue, int reverse) {
-   
     buffer[2] += red;
     buffer[1] += green;
     buffer[0] += blue;
-    
     
     if(negated == true) {
         buffer[0] = ~buffer[0];

@@ -15,7 +15,7 @@ extern QImage start_image;
 
 void changePixel(unsigned int current_filterx, QImage &full_buffer, int i, int z, unsigned char *buffer, double pos, double *count, int reverse, bool negated, unsigned int red, unsigned int green, unsigned int blue, unsigned int randomNumber);
 void alphaFlame(QImage &image, bool neg_state, unsigned int red, unsigned int green, unsigned int blue, int reverse, int filter_num, int iteration);
-unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value);
+inline unsigned char *pixelAt(const QImage &image, int x, int y, unsigned int &value);
 void ApplyOptions(unsigned char *buffer, bool negated, int red, int green, int blue, int reverse);
 void GlitchSort(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev);
 void GlitchSortByChannel(QImage &image, bool neg, int iteration, int red, int green, int blue, int rev);
