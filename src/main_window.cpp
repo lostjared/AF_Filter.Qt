@@ -25,6 +25,7 @@ FilterWindow::FilterWindow(QWidget *parent) : QMainWindow(parent) {
     
     QPixmap icon = QPixmap(":/images/icon.png");
     setWindowIcon(QIcon(icon));
+    filter_control->setWindowIcon(QIcon(icon));
     
 }
 
